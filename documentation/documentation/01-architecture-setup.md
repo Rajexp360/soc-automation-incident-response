@@ -20,3 +20,4 @@ Designing the infrastructure topology for the automated SOC lab. This environmen
 ---
 
 ## 4. Network Diagram & Logical Flow
+![SOC Automation Architecture Diagram](../architecture/soc-automation-diagram.png)
