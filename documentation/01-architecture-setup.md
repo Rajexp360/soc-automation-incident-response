@@ -12,7 +12,7 @@ Design of an end-to-end automated SOC pipeline integrating endpoint detection, S
   <summary>🔍 Click to view image</summary>
   
   <br>
-  <img src="../architecture/soc-automation-diagram.png" alt="Architecture Diagram" width="800">
+  <img src="../architecture/soc-automation-diagram.jpg" alt="Architecture Diagram" width="800">
 </details>
 
 ## 3. Data Flow Pipeline
