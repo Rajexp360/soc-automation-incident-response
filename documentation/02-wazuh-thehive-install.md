@@ -1,42 +1,38 @@
-# Module 02: Infrastructure Provisioning & Core Deployment
+ # Module 02: Infrastructure Provisioning & Core Deployment
 
-## 1. Overview
-Provisioning the core virtual machines and deploying the SIEM and incident management stack (Wazuh and TheHive 5) alongside target endpoint telemetry (Sysmon).
-
----
-
-## 2. Environment Matrix & Firewall Controls
-
-| Host | Environment / OS | Role | Open Ports / Firewall Rules |
-| :--- | :--- | :--- | :--- |
-| `wazuh-server` | DigitalOcean (Ubuntu 22.04 LTS) | SIEM / XDR Indexer & Manager | 22 (SSH), 443 (Dashboard), 1514/1515 (Agent), 55000 (API) |
-| `thehive-server` | DigitalOcean (Ubuntu 22.04 LTS) | Case Management & Incident Triage | 22 (SSH), 9000 (TheHive UI/API) |
-| `win10-client` | VirtualBox (Windows 10 Enterprise) | Attack Target & Telemetry Source | Outbound to Wazuh Server (1514/1515) |
+## 1. Environment Matrix
+* **Windows 10 Client:** Local VM running Sysmon to capture endpoint telemetry.
+* **Wazuh Server:** Ubuntu 22.04 on DigitalOcean running Wazuh Manager, Indexer, and Dashboard.
+* **TheHive Server:** Ubuntu 22.04 on DigitalOcean running TheHive 5, Cassandra, and Elasticsearch.
 
 ---
 
-## 3. Deployment & Installation Logs
-
-### 3.1 Windows 10 Endpoint & Sysmon Telemetry
-* Configured local virtual machine running Windows 10 in VirtualBox.
-* Deployed Microsoft Sysmon with the SwiftOnSecurity configuration to monitor process creation, network connections, and memory injection.
+## 2. Windows 10 & Sysmon Setup
+Installed Sysmon with the SwiftOnSecurity configuration to monitor process creation and network events.
 
 <details>
-  <summary><b>View Sysmon Installation Verification</b></summary>
+  <summary>View Sysmon Setup</summary>
   <br>
-  <!-- ![Sysmon Verification](../screenshots/01-sysmon-install.png) -->
+  
+  ![Sysmon Setup](../screenshots/01-sysmon-installed.png)
+  
 </details>
 
-### 3.2 Cloud Firewall & Security Hardening
-* Configured DigitalOcean Cloud Firewall rules restricted to the analyst's public IP address to prevent exposure to Internet scanners.
+---
+
+## 3. Cloud Firewall Rules
+Restricted DigitalOcean inbound traffic to my public IP on ports 22 (SSH), 443 (Wazuh Dashboard), and 9000 (TheHive UI).
 
 <details>
-  <summary><b>View Cloud Firewall Rules</b></summary>
+  <summary>View Cloud Firewall</summary>
   <br>
-  <!-- ![Cloud Firewall](../screenshots/02-digitalocean-firewall.png) -->
+  <!-- ![Cloud Firewall](../screenshots/02-firewall-rules.png) -->
 </details>
 
-### 3.3 Wazuh All-In-One Deployment
-* Deployed Wazuh Manager, Indexer, and Dashboard using the official automated quickstart installer:
+---
+
+## 4. Wazuh SIEM Installation
+Deployed Wazuh All-in-One via the quickstart script:
+
 ```bash
 curl -sO [https://packages.wazuh.com/4.8/wazuh-install.sh](https://packages.wazuh.com/4.8/wazuh-install.sh) && sudo bash ./wazuh-install.sh -a
