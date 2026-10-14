@@ -20,19 +20,63 @@ Installed Sysmon with the SwiftOnSecurity configuration to monitor process creat
 
 ---
 
-## 3. Cloud Firewall Rules
-Restricted DigitalOcean inbound traffic to my public IP on ports 22 (SSH), 443 (Wazuh Dashboard), and 9000 (TheHive UI).
+
+# Module 02: Infrastructure Provisioning & Core Deployment
+
+## 1. Cloud Infrastructure (AWS EC2)
+* Deployed Ubuntu 22.04 LTS instances on AWS EC2 to host Wazuh and TheHive platforms.
+* Configured security groups to restrict administrative access (SSH, Dashboard, API) to trusted IP addresses.
 
 <details>
-  <summary>View Cloud Firewall</summary>
+  <summary>View AWS EC2 Instances</summary>
   <br>
-  <!-- ![Cloud Firewall](../screenshots/02-firewall-rules.png) -->
+  <img src="../screenshots/03-Created-AWS-ec2-instances.png" alt="AWS EC2 Instances" width="800">
 </details>
 
 ---
 
-## 4. Wazuh SIEM Installation
-Deployed Wazuh All-in-One via the quickstart script:
+## 2. Wazuh SIEM Deployment
+* Installed Wazuh Manager, Indexer, and Dashboard using the automated installation assistant.
+* Verified that Wazuh server services are running and accessible via the web interface.
 
-```bash
-curl -sO [https://packages.wazuh.com/4.8/wazuh-install.sh](https://packages.wazuh.com/4.8/wazuh-install.sh) && sudo bash ./wazuh-install.sh -a
+<details>
+  <summary>View Wazuh Dashboard Access</summary>
+  <br>
+  <img src="../screenshots/02-wazuh-installed.png" alt="Wazuh Installed" width="800">
+</details>
+
+---
+
+## 3. TheHive 5 Backend Dependencies & Service Setup
+* Configured Apache Cassandra database backend and verified service health.
+* Configured and verified Elasticsearch service for log parsing and index storage.
+* Initialized TheHive 5 application service linked to Cassandra and Elasticsearch.
+
+<details>
+  <summary>View Cassandra Status</summary>
+  <br>
+  <img src="../screenshots/04-cassandra-running.png" alt="Cassandra Running" width="800">
+</details>
+
+<details>
+  <summary>View Elasticsearch Status</summary>
+  <br>
+  <img src="../screenshots/05-enabled-elastic-search.png" alt="Elasticsearch Status" width="800">
+</details>
+
+<details>
+  <summary>View Enabled Services (Cassandra, Elasticsearch, TheHive)</summary>
+  <br>
+  <img src="../screenshots/06-cassandra-elasticsearch-thehive-enabled.png" alt="Services Running" width="800">
+</details>
+
+---
+
+## 4. TheHive Web UI Verification
+* Successfully accessed TheHive web application on port 9000 and created administrative credentials.
+
+<details>
+  <summary>View TheHive Web Interface</summary>
+  <br>
+  <img src="../screenshots/07-hive-homepage.png" alt="TheHive Homepage" width="800">
+</details>
