@@ -1,31 +1,35 @@
-# Automated SOC & Incident Response Lab (Wazuh, TheHive, Shuffle SOAR)
+ # Automated SOC & Incident Response Lab
 
 ## Project Overview
-An end-to-end Security Operations Center (SOC) and incident response automation pipeline designed to detect adversary activity, automate alert triage, ingest cases into a security incident response platform, and execute active containment actions.
+An end-to-end Security Operations Center (SOC) and incident response automation pipeline designed to detect adversary activity, automate alert triage, enrich indicators of compromise (IOCs) with threat intelligence, ingest structured cases into TheHive, and alert analysts for containment actions.
+
+---
 
 ## Core Technologies
 * **SIEM / XDR:** Wazuh (Manager, Indexer, Dashboard)
-* **Incident Case Management:** TheHive 5
+* **Incident Case Management:** TheHive 5 (Cassandra, Elasticsearch)
 * **Security Orchestration, Automation & Response (SOAR):** Shuffle SOAR
-* **Endpoint Telemetry:** Windows 10 / Windows Server with Sysmon & Wazuh Agent
-* **Adversary Simulation:** Mimikatz, Atomic Red Team
-* **Threat Intelligence & Analysis:** VirusTotal, SquareX
+* **Endpoint Telemetry:** Windows 10 (Sysmon + Wazuh Agent)
+* **Threat Intelligence & Analysis:** VirusTotal API, SquareX
+* **Cloud Infrastructure:** AWS EC2 (Ubuntu 22.04 LTS)
+
+---
 
 ## High-Level Architecture Flow
-1. **Adversary Emulation:** Threat simulation executed on the Windows target endpoint (e.g., Mimikatz credential dumping).
+1. **Adversary Activity:** Threat simulation executed on the Windows target endpoint (Mimikatz staging).
 2. **Detection & Telemetry:** Sysmon captures low-level process and memory access events; Wazuh Agent forwards telemetry to Wazuh Manager.
-3. **Alert Trigger & Webhook:** Wazuh matches custom detection rules and fires an automated alert webhook to Shuffle SOAR.
-4. **Enrichment & Automation (SOAR):** Shuffle receives the payload, enriches IOCs via external threat intelligence APIs, and alerts analysts via email/messaging.
-5. **Case Management:** Shuffle automatically creates an alert and incident ticket inside TheHive with structured IOC artifacts.
-6. **Active Containment:** Shuffle sends an active response command back to Wazuh to isolate the endpoint or block malicious hashes/IPs.
+3. **Alert Trigger & Webhook:** Wazuh matches detection rules and fires an automated alert webhook to Shuffle SOAR.
+4. **Threat Intelligence Enrichment:** Shuffle extracts file hashes/IPs and queries the VirusTotal API for reputation scoring.
+5. **Case Management Ingestion:** Shuffle creates a case ticket inside TheHive with structured IOC artifacts.
+6. **Analyst Notification:** Shuffle sends an automated email notification to the SOC analyst detailing the alert metadata and containment prompts.
+
+---
 
 ## Lab Modules & Documentation
 
-| Module | Phase / Component | Status | Link |
-| :--- | :--- | :--- | :--- |
-| 01 | Architecture Design & Virtual Network Setup | In Progress | [View Documentation](documentation/01-architecture-setup.md) |
-| 02 | Wazuh SIEM & Indexer Server Deployment | Pending | *Upcoming* |
-| 03 | TheHive Case Management & Cassandra/Elastic Setup | Pending | *Upcoming* |
-| 04 | Target Endpoint Configuration & Sysmon Ingestion | Pending | *Upcoming* |
-| 05 | Shuffle SOAR Workflow Engineering & API Integrations | Pending | *Upcoming* |
-| 06 | Adversary Simulation (Mimikatz) & Automated Containment | Pending | *Upcoming* |
+| Module | Phase / Component | Status | Documentation |
+| :---: | :--- | :---: | :--- |
+| **01** | Architecture Design & Logical Data Flow | Completed | [View Documentation](documentation/01-architecture-setup.md) |
+| **02** | Infrastructure Provisioning & Core Deployment (AWS, Wazuh, TheHive) | Completed | [View Documentation](documentation/02-wazuh-thehive-install.md) |
+| **03** | Target Endpoint Configuration & Sysmon Ingestion | Completed | [View Documentation](documentation/03-target-endpoint-telemetry.md) |
+| **04** | SOAR Workflow Engineering & Threat Intelligence Automation | Completed | [View Documentation](documentation/04-soar-automation-detection.md) |
